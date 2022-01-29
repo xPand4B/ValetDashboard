@@ -10,4 +10,4 @@ A simple dashboard for Laravel Valet.
 ## How to install
 1. Clone or download the repo
 2. Run `valet link` inside the project directory
-3. Run `valet open` to get the dashboard _(default: https://valetdashboard.test)_
+3. Run `valet open` to get the dashboard _(default: http://valetdashboard.test/)_
