@@ -1,34 +1,72 @@
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+
 /**
  * ---------------------------------
- * Sources
+ * Backgrounds
  * ---------------------------------
- *
- * https://webgradients.com/
- *
  */
-.bg-gradient-dark {
-    /* 045 Loon Crest */
-    background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
-    background-blend-mode: multiply,multiply;
-}
-.bg-gradient-gray {
-    /* 071 Above Clouds */
-    background-image: linear-gradient(to left, #BDBBBE 0%, #9D9EA3 100%), radial-gradient(88% 271%, rgba(255, 255, 255, 0.25) 0%, rgba(254, 254, 254, 0.25) 1%, rgba(0, 0, 0, 0.25) 100%), radial-gradient(50% 100%, rgba(255, 255, 255, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%);
-    background-blend-mode: normal, lighten, soft-light;
+.bg-discord-primary {
+    background-color: #36393f;
 }
 
-.bg-gradient-gray-light {
-    /* 074 Sharp Glass */
-    background: #C9CCD3 linear-gradient(-180deg, rgba(255, 255, 255, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%);
-    background-blend-mode: lighten;
+.bg-discord-secondary {
+    background-color: #2f3136;
 }
 
-.bg-gradient-blue {
-    background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+.bg-discord-tertiary {
+    background-color: #202225;
 }
 
-.item:hover {
-    /* 071 */
-    background-image: linear-gradient(to left, #BDBBBE 0%, #9D9EA3 100%), radial-gradient(88% 271%, rgba(255, 255, 255, 0.25) 0%, rgba(254, 254, 254, 0.25) 1%, rgba(0, 0, 0, 0.25) 100%), radial-gradient(50% 100%, rgba(255, 255, 255, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%);
-    background-blend-mode: normal, lighten, soft-light;
+.bg-fab-default {
+    background-color: #36393f;
+    fill: hsl(139,calc(1*47.3%),43.9%);;
+}
+.bg-fab-default:hover {
+    background-color: hsl(139,calc(1*47.3%),43.9%);
+    fill: white;
+}
+
+/**
+ * ---------------------------------
+ * Components
+ * ---------------------------------
+ */
+.card-discord {
+    background-color: #2f3136;
+    border-left: 4px solid #43A7FF;
+}
+
+.item-discord {
+    background-color: #4f545c;
+    color: #f6f6f7;
+}
+.item-discord:hover {
+    background-color: #72767d;
+    cursor: pointer;
+}
+
+.item-shopware-admin {
+    background-color: #253758;
+    color: #bcc9dc;
+}
+.item-shopware-admin:hover {
+    background-color: #2A3F65;
+    cursor: pointer;
+}
+
+/**
+ * ---------------------------------
+ * Text
+ * ---------------------------------
+ */
+.text-discord-header-secondary {
+    color: #b9bbbe;
+}
+
+.text-discord {
+    color: #bcc9dc;
 }

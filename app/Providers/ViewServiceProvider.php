@@ -17,6 +17,11 @@ class ViewServiceProvider extends ServiceProvider
     ];
 
     /**
+     * @var int
+     */
+    private $totalSites;
+
+    /**
      * Bootstrap any application services.
      *
      * @return void
@@ -48,7 +53,8 @@ class ViewServiceProvider extends ServiceProvider
         $valetInfos = [
             'tld' => $tld,
             'port' => self::VALET_PORT,
-            'paths' => $this->getSitesFromPaths($valetConfig->paths, $tld)
+            'paths' => $this->getSitesFromPaths($valetConfig->paths, $tld),
+            'total' => $this->totalSites
         ];
 
         view()->share('valet', $valetInfos);
@@ -72,6 +78,11 @@ class ViewServiceProvider extends ServiceProvider
         );
     }
 
+    private function getValetTld($valetConfig): string
+    {
+        return $valetConfig->tld ?? $valetConfig->domain;
+    }
+
     private function getSitesFromPaths(array $paths, string $tld): array
     {
         $result = [];
@@ -81,6 +92,7 @@ class ViewServiceProvider extends ServiceProvider
             $result[$trimmedPath] = [];
 
             foreach (scandir($path) as $key => $site) {
+                // Skip self
                 if (mb_strtolower($site) === 'valetdashboard') {
                     continue;
                 }
@@ -90,39 +102,26 @@ class ViewServiceProvider extends ServiceProvider
                 if (!(is_dir("$path/$site") || is_link("$path/$site"))) {
                     continue;
                 }
+                // Skip . directories
                 if ($site[0] === '.') {
                     continue;
                 }
+                // Skip ignored directories
                 if (in_array($site, self::IGNORED_DIRECTORIES)) {
                     continue;
                 }
 
-                if ($site === 'cloud.shopware') {
-                    $tld .= '/admin';
-                }
+                $this->totalSites++;
 
                 $url = 'http://' . $site . '.' . $tld . self::VALET_PORT;
+                $isShopware = strpos(strtolower($site), 'shopware') !== false;
 
-                if ($site === 'cloud.shopware') {
-                    $tld = str_replace('/admin', '', $tld);
-                }
-
-
-                // if ($site === 'swDashboard') {
-                //     $url = 'http://shopware.dashboard';
-                // }
-
-                $result[$trimmedPath][$site] = $url;
+                $result[$trimmedPath][$site] = compact('url', 'isShopware');
             }
 
             array_multisort($result[$trimmedPath]);
         }
 
         return $result;
-    }
-
-    private function getValetTld($valetConfig): string
-    {
-        return $valetConfig->tld ?? $valetConfig->domain;
     }
 }
