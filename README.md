@@ -1,11 +1,13 @@
 # Valet-Dashboard
 A simple dashboard for Laravel Valet.
 
-![ValetDashboard Screenshot](resources/assets/valet_dashboard.png?raw=true "ValetDashboard Screenshot")
+![ValetDashboard Screenshot](assets/valet_dashboard_110.png?raw=true "ValetDashboard Screenshot")
 
 - **License**: [MIT License](LICENSE.md)
 - **GitHub Repository**: <https://github.com/xPand4B/ValetDashboard>
 - **Issue Tracker**: <https://github.com/xPand4B/ValetDashboard/issues>
 
 ## How to install
-Simply run `composer install` and `valet link` inside the root directory!
+1. Clone/Download the repo or just download the `index.php` into a directory
+2. Run `valet link` inside the project directory
+3. Run `valet open` to get the dashboard _(default: https://valetdashboard.test)_
