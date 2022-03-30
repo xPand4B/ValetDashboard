@@ -219,7 +219,7 @@
                 <div>
                     <button
                         class="p-2 bg-fab-laravel text-white text-sm font-bold tracking-wide rounded-full focus:outline-none cursor-pointer shadow-2xl transition duration-200"
-                        onclick="window.open('https://laravel.com/docs/8.x/valet')"
+                        onclick="window.open('https://laravel.com/docs/9.x/valet')"
                         title="Laravel Valet"
                     >
                         <svg viewBox="0 -.11376601 49.74245785 51.31690859" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
