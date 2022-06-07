@@ -91,9 +91,12 @@
 
                     $this->totalSites++;
 
+                    $isShopware = strpos(strtolower($site), 'shopware') !== false;
+                    $isPimcore = strpos(strtolower($site), 'pimcore') !== false;
+
                     $result[$trimmedPath][$site] = [
                         'url' => 'http://' . $site . '.' . $this->tld . self::VALET_PORT,
-                        'isShopware' => strpos(strtolower($site), 'shopware') !== false,
+                        'hasAdmin' => $isShopware || $isPimcore
                         // 'githubLink' => parse_ini_file("$path/$site/.git/config")['url'] ?? null
                     ];
                 }
@@ -296,14 +299,14 @@
                                         <div class="flex flex-row items-center mb-2">
                                             <!-- Site Link -->
                                             <div
-                                                class="py-2 px-5 flex-auto text-center font-normal item-discord transition duration-150 rounded-l <?=$info['isShopware'] ? null : 'rounded-r' ?>"
+                                                class="py-2 px-5 flex-auto text-center font-normal item-discord transition duration-150 rounded-l <?=$info['hasAdmin'] ? null : 'rounded-r' ?>"
                                                 onclick="window.open('<?=$info['url']?>')"
                                             >
                                                 <?=$site?>
                                             </div>
 
                                             <!-- Admin Button -->
-                                            <?php if($info['isShopware']): ?>
+                                            <?php if($info['hasAdmin']): ?>
                                                 <div
                                                     class="p-2 flex w-16 justify-center text-discord bg-indigo-800 hover:bg-indigo-900 italic rounded-r font-semibold cursor-pointer transition duration-150"
                                                     onclick="window.open('<?=$info['url']?>/admin')"
