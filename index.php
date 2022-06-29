@@ -93,10 +93,11 @@
 
                     $isShopware = strpos(strtolower($site), 'shopware') !== false;
                     $isPimcore = strpos(strtolower($site), 'pimcore') !== false;
+                    $isNamedPimcore = strpos(strtolower($path), 'pimcore') !== false;
 
                     $result[$trimmedPath][$site] = [
                         'url' => 'http://' . $site . '.' . $this->tld . self::VALET_PORT,
-                        'hasAdmin' => $isShopware || $isPimcore
+                        'hasAdmin' => $isShopware || $isPimcore || $isNamedPimcore
                         // 'githubLink' => parse_ini_file("$path/$site/.git/config")['url'] ?? null
                     ];
                 }
