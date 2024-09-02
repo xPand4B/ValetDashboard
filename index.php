@@ -1,6 +1,8 @@
 <?php
     class ValetDashboard
     {
+        const HERD_PATH = '/Library/Application Support/Herd/config/valet';
+
         const VALET_PORT = '';
         const VALET_XDG_HOME = '/.config/valet';
         CONST VALET_OLD_HOME = '/.valet';
@@ -9,6 +11,7 @@
         const IGNORED_DIRECTORIES = [
             '00-Helper',
             'valet',
+            '/Library/Application Support/Herd/config/valet',
         ];
 
         /**
@@ -41,8 +44,17 @@
             $this->paths = $this->getSitesFromPaths($valetConfig->paths);
         }
 
-        private function getValetHomePath(): string
+        /**
+         * @return string
+         */
+        private function getValetHomePath()
         {
+            $herdPath = getenv('HOME') . self::HERD_PATH;
+
+            if (is_dir($herdPath)) {
+                return $herdPath;
+            }
+
             $valet_xdg_home = getenv('HOME') . self::VALET_XDG_HOME;
             $valet_old_home = getenv('HOME') . self::VALET_OLD_HOME;
 
@@ -59,18 +71,31 @@
             );
         }
 
-        private function getValetTld($valetConfig): string
+        /**
+         * @return string
+         */
+        private function getValetTld($valetConfig)
         {
             return $valetConfig->tld ?? $valetConfig->domain;
         }
 
-        private function getSitesFromPaths(array $paths): array
+        /**
+         * @return array
+         */
+        private function getSitesFromPaths(array $paths)
         {
             $result = [];
 
             foreach ($paths as $path) {
+                
+                foreach (self::IGNORED_DIRECTORIES as $ignoredDirectory) {
+                    if (strpos($path, $ignoredDirectory) !== false) {
+                        continue 2;
+                    }
+                }
+
                 $trimmedPath = str_replace(getenv('HOME'), '~', $path);
-                $result[$trimmedPath] = [];
+                $result[$trimmedPath] = [];                
 
                 foreach (scandir($path) as $key => $site) {
                     
@@ -219,6 +244,111 @@
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
                             <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Laravel Herd -->
+                <div>
+                    <button
+                        class="p-2 bg-fab-laravel text-white text-sm font-bold tracking-wide rounded-full focus:outline-none cursor-pointer shadow-2xl transition duration-200"
+                        onclick="window.open('https://herd.laravel.com')"
+                        title="Laravel Herd"
+                    >
+                        <svg  xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 440 550" width="36" height="36">
+                            <path d="
+                                M 0.00 0.00
+                                L 150.06 0.00
+                                L 150.02 198.27
+                                A 0.57 0.57 0.0 0 0 150.58 198.84
+                                C 167.47 199.01 185.36 198.48 201.42 199.56
+                                Q 247.43 202.65 289.75 221.46
+                                Q 346.73 247.69 385.71 296.75
+                                Q 419.64 340.34 432.91 394.00
+                                L 437.71 417.50
+                                L 437.79 419.50
+                                Q 437.83 425.29 439.55 430.80
+                                L 440.00 442.31
+                                L 440.00 550.00
+                                L 290.19 550.00
+                                Q 289.89 505.03 289.98 460.07
+                                Q 290.01 447.06 289.06 440.12
+                                C 282.53 392.50 244.70 355.36 196.96 349.75
+                                C 183.01 348.11 165.77 348.98 150.50 349.05
+                                A 0.51 0.49 0.0 0 0 149.99 349.54
+                                L 149.94 550.00
+                                L 0.00 550.00
+                                L 0.00 0.00
+                                Z"
+                            ></path>
+                            <path fill-opacity="0.718" d="
+                                M 291.06 0.00
+                                L 440.00 0.00
+                                L 440.00 410.56
+                                L 439.71 412.50
+                                Q 438.01 415.34 438.46 418.75
+                                Q 438.21 413.29 437.71 417.50
+                                L 432.91 394.00
+                                L 434.02 395.06
+                                A 1.22 0.57 -76.8 0 1 434.21 395.98
+                                C 433.99 397.92 434.99 399.36 435.26 400.92
+                                Q 436.36 407.12 437.36 413.33
+                                A 0.51 0.39 84.6 0 0 437.75 413.75
+                                L 438.26 413.76
+                                A 0.82 0.48 -84.6 0 0 438.79 413.02
+                                Q 439.08 410.54 439.09 404.81
+                                Q 439.19 204.13 439.12 2.95
+                                A 1.69 1.69 0.0 0 0 437.43 1.26
+                                L 290.03 1.42
+                                Q 289.77 0.34 291.06 0.00
+                                Z"
+                            ></path>
+                            <path fill-opacity="0.671" d="
+                                M 432.91 394.00
+                                Q 419.64 340.34 385.71 296.75
+                                C 384.61 293.06 380.98 289.81 378.76 287.15
+                                C 359.29 263.80 331.94 242.48 303.53 227.45
+                                Q 295.45 223.17 290.31 220.80
+                                L 290.19 220.62
+                                A 0.76 0.65 31.6 0 1 290.06 220.22
+                                L 290.03 1.42
+                                L 437.43 1.26
+                                A 1.69 1.69 0.0 0 1 439.12 2.95
+                                Q 439.19 204.13 439.09 404.81
+                                Q 439.08 410.54 438.79 413.02
+                                A 0.82 0.48 -84.6 0 1 438.26 413.76
+                                L 437.75 413.75
+                                A 0.51 0.39 84.6 0 1 437.36 413.33
+                                Q 436.36 407.12 435.26 400.92
+                                C 434.99 399.36 433.99 397.92 434.21 395.98
+                                A 1.22 0.57 -76.8 0 0 434.02 395.06
+                                L 432.91 394.00
+                                Z"
+                            ></path>
+                            <path fill-opacity="0.788" d="
+                                M 385.71 296.75
+                                Q 346.73 247.69 289.75 221.46
+                                L 290.31 220.80
+                                Q 295.45 223.17 303.53 227.45
+                                C 331.94 242.48 359.29 263.80 378.76 287.15
+                                C 380.98 289.81 384.61 293.06 385.71 296.75
+                                Z"
+                            ></path>
+                            <path fill-opacity="0.980" d="
+                                M 439.71 412.50
+                                L 439.55 430.80
+                                Q 437.83 425.29 437.79 419.50
+                                Q 438.46 421.97 438.46 418.75
+                                Q 438.01 415.34 439.71 412.50
+                                Z"
+                            ></path>
+                            <path fill-opacity="0.671" d="
+                                M 438.46 418.75
+                                Q 438.46 421.97 437.79 419.50
+                                L 437.71 417.50
+                                Q 438.21 413.29 438.46 418.75
+                                Z"
+                            ></path>
                         </svg>
                     </button>
                 </div>
